@@ -1,61 +1,82 @@
-import { React, useState } from 'react';
+import {React, useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 
 export default function App() {
   const [valor1, setValor1] = useState();
   const [valor2, setValor2] = useState();
-  const [resultado, setResultado] = useState(0);
-  var [resposta, setResposta] = useState();
+  const [result, setResultado] = useState();
+  const [resposta, setResposta] = useState();
 
   function calcular(){
-    setResultado(parseFloat(valor1) / parseFloat(valor2));
-    if(resultado >= 0.7){
-      setResposta = "Vale mais apena usar alcool.";
+    let calc = (parseFloat (valor2) / parseFloat(valor1));
+    setResultado(calc.toFixed(2));
+    if(calc  <= 0.7){
+      setResposta("Alquinho vale mais apena");
+      
     }else{
-      setResposta = "não vale";
+      setResposta("Gasosa vale mais apena");
     }
   }
-  
+
+
+
+
+  function clear(){
+    setResultado(null);
+    setValor1("");
+    setValor2("");
+    setResposta("");
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>Adolpho's Smart Calculator</Text>
+      <Text style={styles.texto}>Escolha seu combustivel</Text>
       <Image
         style={styles.logo}
         source={{
-          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8cY64IC1j6Ldim8oMmahvNvIgLWkQpB6aDQ&usqp=CAU',
+          uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTabrl2VTWfpp7MbwZp6gVKWPv5C_3Xkx-VlQ&usqp=CAU',
         }}
       />
       <View style={styles.bloco}>
-        <Text style={styles.textoBloco}>Gasolina:</Text>
-        <TextInput 
+        <Text style={styles.textoBloco}>VALOR GASOLINA:</Text>
+        <TextInput
+          maxLength={4} 
           style={styles.input}
           keyboardType="numeric"
-          placeholder="Insira o valor da gasolina"
           value={valor1}
+          placeholder='Valor da gasosa'
           onChangeText={(texto)=>setValor1(texto)}
-        />
-      </View>
-      <View style={styles.bloco}>
-        <Text style={styles.textoBloco}>Alcool</Text>
-        <TextInput 
+      />
+    </View>
+    <View style={styles.bloco}>
+        <Text style={styles.textoBloco}>VALOR ÁLCOOL:</Text>
+        <TextInput
+          maxLength={4} 
           style={styles.input}
           keyboardType="numeric"
-          placeholder="Insira o valor do álcool"
+          placeholder='Valor do Alquinho'
           value={valor2}
           onChangeText={(texto)=>setValor2(texto)}
         />
       </View>
       <View style={styles.bloco}>
         <TouchableOpacity 
-          style={styles.botao}
-          onPress={calcular}
-        >
-            <Text style={styles.textoBotao}>Calcular</Text>
+        style={styles.botao}
+        onPress={calcular}>
+            <Text style={styles.textoBotao}>CALCULAR</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.bloco}>
-        <Text style={styles.textoBloco}>Resultado: {resultado} {resposta}</Text>
+        <Text style={styles.texto}>Diferença: {result}  </Text>
+        <Text style={styles.texto}> {resposta} </Text>
+      </View>
+      <View style={styles.bloco}>
+        <TouchableOpacity 
+        style={styles.botao}
+        onPress={clear}>
+            <Text style={styles.textoBotao}>LIMPAR</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -67,22 +88,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'cyan',
     alignItems: 'center',
     justifyContent: 'center',
-
-  },
-  textoBloco:{
-    fontSize:20,
   },
   texto:{
-    color:'#000',
-    fontSize:30
+    color: 'black',
+    fontSize: 30
+  },
+  textoBloco:{
+    fontSize:30,
   },
   input:{
-    borderColor:'#000',
-    borderWidth:1,
-    borderRadius:20,
-    textAlign: 'center',
+    borderColor:'orange',
+    borderWidth:2,
     fontSize:30,
-    width:'80%'
+    width:'80%',
+    textAlign: 'center',
+    borderRadius: 20
   },
   bloco:{
     width:'100%',
@@ -90,19 +110,19 @@ const styles = StyleSheet.create({
     marginTop:30
   },
   botao:{
-    backgroundColor:'#f81',
+    backgroundColor:'orange',
     width:'80%',
     textAlign:'center',
-    borderRadius: 20,
-    marginTop: 10
+    borderRadius: 20
   },
   textoBotao:{
     color:"#fff",
     fontSize:30
-  }, 
+  },
   logo:{
-    width:70,
-    height:70
+    width: 80,
+    height: 70,
+    margin: 5,
+    borderRadius: 15
   }
-  
 });
